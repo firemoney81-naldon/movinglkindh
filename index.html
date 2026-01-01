@@ -1,23 +1,419 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
-    </nav>
-    <main>
-      <h1>Home page</h1>
-    </main>
-  </body>
-</html>
+
+    <!-- Schema.org 구조화 데이터 -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MovingCompany",
+      "name": "일산이사업체",
+      "description": "고양시 일산동구, 일산서구 원룸, 투룸, 빌라, 아파트, 오피스텔 포장이사 및 이사짐센터 전문 서비스. 합리적인 가격으로 안전한 이사를 보장합니다.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "경기도 고양시 일산동구 XXX로 XX",
+        "addressLocality": "고양시 일산동구",
+        "addressRegion": "경기도",
+        "postalCode": "104XX",
+        "addressCountry": "KR"
+      },
+      "telephone": "031-XXX-XXXX",
+      "url": "https://www.example.com/ilsan-moving-company",
+      "openingHours": "Mo-Su 08:00-20:00",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "일산 이사 서비스 목록",
+        "itemListElement": [
+          {"@type":"Offer","itemOffered":{"@type":"Service","name":"일산 원룸 포장이사"}},
+          {"@type":"Offer","itemOffered":{"@type":"Service","name":"일산 투룸 포장이사"}},
+          {"@type":"Offer","itemOffered":{"@type":"Service","name":"일산 빌라·아파트 포장이사"}},
+          {"@type":"Offer","itemOffered":{"@type":"Service","name":"일산 오피스텔 포장이사"}},
+          {"@type":"Offer","itemOffered":{"@type":"Service","name":"일산 사무실 이사"}},
+          {"@type":"Offer","itemOffered":{"@type":"Service","name":"일산 이삿짐센터 보관서비스"}}
+        ]
+      }
+    }
+    </script>
+
+    <!-- 외부 CSS/JS는 실제 운영 시 분리 및 minify -->
+    <style>
+        /* 기본 레이아웃 및 폰트 설정 */
+        body { font-family: 'Noto Sans KR', sans-serif; margin: 0; padding: 0; color: #333; line-height: 1.8; background-color: #f8f9fa; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        header { background-color: #ffffff; padding: 20px 0; border-bottom: 1px solid #e0e0e0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        h1 { font-size: 2.5em; color: #004d99; text-align: center; margin-bottom: 5px; line-height: 1.4; }
+        h2 { font-size: 2em; color: #004d99; border-bottom: 3px solid #004d99; padding-bottom: 10px; margin-top: 40px; }
+        h3 { font-size: 1.5em; color: #004d99; margin-top: 30px; }
+        section { padding: 40px 0; }
+
+        /* 내비게이션 스타일 */
+        nav ul { list-style: none; padding: 0; margin: 0; display: flex; justify-content: center; gap: 20px; font-weight: bold; }
+        nav a { text-decoration: none; color: #555; transition: color 0.3s; padding: 5px 10px; }
+        nav a:hover { color: #0078D7; border-bottom: 2px solid #0078D7; }
+
+        /* CTA 버튼 스타일 */
+        .cta-btn { display: inline-block; background: #0078D7; color: #fff; padding: 15px 30px; border-radius: 8px; text-decoration: none; font-size: 1.1em; font-weight: bold; transition: background 0.3s, transform 0.2s; text-align: center; margin-top: 15px; }
+        .cta-btn:hover { background: #005a9e; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .cta-group { text-align: center; margin-top: 30px; }
+
+        /* 서비스 카드 스타일 */
+        .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 30px; }
+        .service-card { background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); padding: 30px; transition: transform 0.3s; }
+        .service-card:hover { transform: translateY(-5px); }
+        .service-card h3 { color: #0078D7; margin-top: 0; border-bottom: none; }
+        .service-card p { color: #666; font-size: 0.95em; line-height: 1.6; }
+
+        /* 데이터 테이블 스타일 */
+        .data-table-container { overflow-x: auto; margin: 20px 0; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background-color: #ffffff; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        th, td { padding: 15px; text-align: center; border: 1px solid #ddd; }
+        th { background-color: #f0f4f7; color: #333; font-weight: bold; }
+        td { color: #555; }
+        .highlight { background-color: #fff8e1; font-weight: bold; }
+
+        /* FAQ 스타일 */
+        .faq .faq-item { background-color: #ffffff; border-radius: 8px; padding: 20px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .faq .faq-question { font-weight: bold; color: #004d99; cursor: pointer; display: block; }
+        .faq .faq-answer { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px solid #eee; color: #666; }
+
+        /* 폼 스타일 */
+        .quote-form-group { background-color: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 30px; }
+        form input[type="text"], form input[type="tel"], form textarea, form select { width: 100%; padding: 12px; margin-top: 5px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 1em; }
+        form label { font-weight: bold; color: #444; margin-bottom: 5px; display: block; }
+        form button[type="submit"] { width: 100%; background: #0078D7; color: #fff; border: none; padding: 15px; border-radius: 5px; font-size: 1.1em; cursor: pointer; transition: background 0.3s; }
+        form button[type="submit"]:hover { background: #005a9e; }
+
+        /* 키워드 클라우드 스타일 */
+        .keyword-cloud { margin-top: 20px; text-align: center; }
+        .keyword-cloud a { display: inline-block; background-color: #e9ecef; color: #333; padding: 8px 15px; border-radius: 20px; font-size: 0.9em; margin: 5px; text-decoration: none; transition: background-color 0.3s; }
+        .keyword-cloud a:hover { background-color: #dee2e6; color: #0078D7; }
+
+        /* 푸터 스타일 */
+        footer { background-color: #333; color: #ccc; text-align: center; padding: 20px 0; font-size: 0.9em; }
+        footer a { color: #ccc; text-decoration: none; }
+
+        /* 모바일 최적화 */
+        @media (max-width: 768px) {
+            h1 { font-size: 2em; }
+            h2 { font-size: 1.8em; }
+            .service-grid { grid-template-columns: 1fr; }
+            nav ul { flex-wrap: wrap; justify-content: space-around; gap: 10px; }
+            nav a { padding: 5px; font-size: 0.9em; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 헤더 및 내비게이션 -->
+    <header>
+        <div class="container">
+            <h1>일산 포장이사 이삿짐센터 - 고양시 지역 전문 이사 서비스</h1>
+            <p style="text-align: center; color: #666; font-size: 1.1em;">고양시 일산동구, 일산서구 전 지역 <strong>원룸 포장이사</strong>, <strong>아파트 이사</strong>, <strong>사무실 이사</strong> 전문. 합리적인 가격의 토탈 이사 솔루션.</p>
+            <nav>
+                <ul>
+                    <li><a href="#about">회사 소개</a></li>
+                    <li><a href="#services">주요 서비스</a></li>
+                    <li><a href="#pricing">비용 및 견적</a></li>
+                    <li><a href="#localinfo">일산 지역 특징</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#contact">상담 신청</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 인트로 섹션 - 일산 지역 키워드 중심 -->
+    <section class="container" id="about">
+        <h2>일산 포장이사, 왜 지역 전문가에게 맡겨야 할까요?</h2>
+        <p>일산은 계획도시의 특성상 동구와 서구의 주거 환경이 매우 다릅니다. 일산동구의 백석동, 마두동, 정발산동 일대는 킨텍스 및 호수공원과 인접한 신축 오피스텔 단지가 밀집해 있고, 식사동 일대는 대규모 신축 아파트 단지가 주를 이룹니다. 반면 일산서구는 탄현동, 덕이동의 아파트 단지와 후곡마을, 대화동의 오래된 주거 단지가 혼재되어 있습니다. 이처럼 복잡한 일산 지역 이사 경험이 부족한 업체는 현장에서 추가 비용을 요구하거나 이사 진행에 차질을 빚기 쉽습니다.</p>
+        <p>저희 일산이사업체는 고양시 일산동구 및 일산서구 지역에서 수년간 이사 서비스를 제공해온 <strong>지역 전문가</strong>입니다. 2026년 이사 동향을 분석하여 최적화된 이사 솔루션을 제공하며, 일산 지역 특성에 맞는 맞춤형 이사를 보장합니다. 일산동구 장항동의 오피스텔 밀집 지역부터 일산서구 탄현동의 신축 아파트까지, 고객님의 소중한 이삿짐을 안전하고 신속하게 운반합니다.</p>
+
+        <h3>주요 검색 키워드 및 연관 검색어 분석</h3>
+        <p>고객님들이 '일산이사'와 함께 많이 검색하는 키워드들입니다. 저희는 이 모든 수요에 부응하는 전문 서비스를 제공합니다.</p>
+        <div class="keyword-cloud">
+            <a href="#원룸포장이사">일산 원룸 포장이사</a>
+            <a href="#아파트이사">일산 아파트 포장이사</a>
+            <a href="#투룸포장이사">일산 투룸 이사</a>
+            <a href="#보관이사">일산 이삿짐 보관</a>
+            <a href="#반포장이사">일산 반포장이사</a>
+            <a href="#사무실이사">일산 사무실 이사</a>
+            <a href="#덕양구이사">덕양구 포장이사</a>
+            <a href="#일산동구이사">일산동구 이사</a>
+            <a href="#일산서구이사">일산서구 이사</a>
+            <a href="#마두동이사">마두동 이사</a>
+            <a href="#백석동이사">백석동 이사</a>
+            <a href="#정발산동이사">정발산동 이사</a>
+            <a href="#킨텍스이사">킨텍스 이사</a>
+            <a href="#탄현동이사">탄현동 이사</a>
+            <a href="#후곡마을이사">후곡마을 이사</a>
+            <a href="#주엽동이사">주엽동 이사</a>
+            <a href="#대화동이사">대화동 이사</a>
+            <a href="#식사동이사">식사동 자이 이사</a>
+            <a href="#풍동이사">풍동 이사</a>
+            <a href="#가좌동이사">가좌동 이사</a>
+            <a href="#중산동이사">중산동 이사</a>
+            <a href="#덕이동이사">덕이동 이사</a>
+        </div>
+        <div class="cta-group">
+            <a href="#contact" class="cta-btn">일산 포장이사 무료 견적 받기</a>
+        </div>
+    </section>
+
+    <!-- 서비스 상세 소개 섹션 -->
+    <section class="container" id="services">
+        <h2>일산 맞춤형 이사 서비스 종류</h2>
+        <p>고객님의 이사 환경과 짐의 양에 따라 최적의 솔루션을 제안합니다. 일반 이사부터 프리미엄 포장이사까지, 일산 지역 특성에 맞춘 전문 서비스를 경험해보세요.</p>
+
+        <div class="service-grid">
+            <div class="service-card" id="원룸포장이사">
+                <h3>원룸·오피스텔 포장이사 (1~2인 가구)</h3>
+                <p>일산동구 백석동, 장항동 오피스텔 단지 및 일산서구 주엽동 원룸촌에서 이사하는 1~2인 가구를 위한 맞춤 서비스입니다. 짐이 적더라도 포장재와 운송 인력에 따라 비용이 천차만별입니다. 저희는 효율적인 포장으로 시간과 비용을 절약하며, 층수와 엘리베이터 유무에 따른 최적의 운반 계획을 수립합니다. 작은 짐도 소중하게, 신속하고 깔끔하게 마무리합니다.</p>
+                <ul>
+                    <li><strong>특징:</strong> 1톤/1.5톤 차량, 전문 인력 2명 투입, 최소 포장 및 정리.</li>
+                    <li><strong>주요 지역:</strong> 백석동 오피스텔, 장항동 오피스텔, 주엽동 원룸.</li>
+                </ul>
+                <a href="#contact" class="cta-btn" style="background-color: #f39c12;">원룸 이사 견적 문의</a>
+            </div>
+
+            <div class="service-card" id="투룸포장이사">
+                <h3>투룸·빌라 포장이사 (신혼부부/소형가족)</h3>
+                <p>일산 지역의 빌라 및 투룸 아파트에 거주하는 신혼부부 또는 소형 가족을 위한 서비스입니다. 짐의 양이 원룸보다 많아지기 때문에 이사 전 꼼꼼한 견적과 계획이 필수입니다. 특히 일산서구 후곡마을, 대화동 빌라의 경우 주차 공간 협소 및 좁은 계단 통로 등의 변수가 많습니다. 저희는 현장 방문 견적을 통해 이러한 변수를 사전에 파악하고 대비하여, 추가 비용 발생을 최소화합니다.</p>
+                <ul>
+                    <li><strong>특징:</strong> 2.5톤 차량, 전문 인력 2~3명 투입, 전반적인 포장 및 정리, 사다리차 옵션 제공.</li>
+                    <li><strong>주요 지역:</strong> 후곡마을 빌라 단지, 마두동 빌라 단지, 대화동 주택가.</li>
+                </ul>
+                <a href="#contact" class="cta-btn" style="background-color: #f39c12;">투룸 이사 견적 문의</a>
+            </div>
+
+            <div class="service-card" id="아파트이사">
+                <h3>아파트·대형 포장이사 (일반 가구)</h3>
+                <p>일산 신도시의 상징인 대규모 아파트 단지(백마마을, 강선마을, 후곡마을, 식사동 자이) 이사를 전문적으로 처리합니다. 대형 가구 및 가전제품이 많고 짐이 무거운 아파트 이사는 전문성과 노하우가 중요합니다. 저희는 바닥 보양 작업부터 가구 배치, 청소 서비스까지 체계적인 프로세스로 만족도를 높입니다. 특히 일산은 재건축을 앞둔 노후 아파트 단지가 많아 이사 수요가 꾸준하며, 저희는 이러한 재건축 이사 수요에도 능동적으로 대처합니다.</p>
+                <ul>
+                    <li><strong>특징:</strong> 5톤/7톤 차량, 전문 인력 3~5명 투입, 완벽 포장, 정리 및 청소 서비스.</li>
+                    <li><strong>주요 지역:</strong> 일산동구 백마마을, 식사동 위시티, 일산서구 탄현동 신축 아파트.</li>
+                </ul>
+                <a href="#contact" class="cta-btn" style="background-color: #f39c12;">아파트 이사 견적 문의</a>
+            </div>
+
+            <div class="service-card" id="보관이사">
+                <h3>사무실 이사 및 보관 서비스</h3>
+                <p>기업의 중요 문서와 장비를 안전하게 이전하는 사무실 이사 서비스입니다. KINTEX 주변 및 일산 테크노밸리 등 업무 지구의 사무실 이전을 신속하게 처리하여 업무 공백을 최소화합니다. 또한 이사 날짜가 맞지 않아 짐 보관이 필요한 경우, 쾌적한 보관 창고 서비스를 제공합니다. 일산 지역의 보관 이사는 재건축/리모델링 기간 동안 임시 거처로 이동하는 고객님께 특히 유용합니다.</p>
+                <ul>
+                    <li><strong>특징:</strong> 기업 이사 전문가 배치, 문서 분류 및 보관, 장단기 보관 서비스 제공.</li>
+                    <li><strong>주요 지역:</strong> 킨텍스 주변 오피스, 백석동 사무실 단지.</li>
+                </ul>
+                <a href="#contact" class="cta-btn" style="background-color: #f39c12;">사무실/보관 이사 문의</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 일산 이사 비용 분석 및 견적 안내 섹션 -->
+    <section class="container" id="pricing">
+        <h2>2026년 일산 포장이사 비용 예상 가이드</h2>
+        <p>일산 지역의 포장이사 비용은 짐의 양(톤수), 작업 인원, 이동 거리, 손 없는 날 여부, 사다리차 사용 유무 등 다양한 요인에 따라 달라집니다. 특히 2026년은 일산 신도시 재건축 이슈와 함께 이사 수요가 변동될 가능성이 높으므로, 정확한 비용은 반드시 방문 견적을 통해 확인하는 것이 좋습니다.</p>
+
+        <h3>일산 지역별 예상 이사 비용 (2026년 기준)</h3>
+        <div class="data-table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>서비스 유형</th>
+                        <th>짐 규모 (톤)</th>
+                        <th>예상 비용 범위 (원)</th>
+                        <th>주요 변수</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>원룸 이사</strong></td>
+                        <td>1톤</td>
+                        <td>20만 원 ~ 40만 원</td>
+                        <td>엘리베이터 유무, 짐의 양, 용달/포장 여부</td>
+                    </tr>
+                    <tr>
+                        <td><strong>투룸 이사</strong></td>
+                        <td>2.5톤</td>
+                        <td>40만 원 ~ 70만 원</td>
+                        <td>사다리차 사용 (층수), 가구 분해/재설치 난이도</td>
+                    </tr>
+                    <tr>
+                        <td><strong>아파트/빌라 이사</strong></td>
+                        <td>5톤</td>
+                        <td>80만 원 ~ 130만 원</td>
+                        <td>이사 계절(성수기/비수기), 손 없는 날, 짐의 양</td>
+                    </tr>
+                    <tr>
+                        <td><strong>대형 평수 이사</strong></td>
+                        <td>7.5톤 이상</td>
+                        <td>150만 원 ~ 200만 원+</td>
+                        <td>이사 거리, 특수 짐(피아노, 에어컨 등), 인원 추가 여부</td>
+                    </tr>
+                    <tr>
+                        <td><strong>보관 이사</strong></td>
+                        <td>-</td>
+                        <td>별도 협의 (월 보관료)</td>
+                        <td>보관 기간, 짐의 부피, 짐 보관 창고 환경</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p style="text-align: right; font-size: 0.85em; color: #888;">*위 비용은 일산 지역 이사 평균 데이터에 기반한 예상치이며, 실제 견적은 방문 상담 후 확정됩니다.</p>
+        <div class="cta-group">
+            <a href="#contact" class="cta-btn">정확한 이사 견적 문의하기</a>
+        </div>
+    </section>
+
+    <!-- 일산 지역 정보 및 이사 팁 섹션 (SEO 강화) -->
+    <section class="container" id="localinfo">
+        <h2>일산 신도시 이사자를 위한 심층 정보 분석</h2>
+
+        <h3>일산 이사 수요가 높은 주요 지역별 특징 (2026년 기준)</h3>
+        <p>일산은 1기 신도시 중 하나로, 주거 환경이 안정적이며 교육 및 생활 인프라가 잘 갖춰져 있습니다. 특히 2026년에는 GTX-A 노선 개통에 따른 기대감과 재건축 이슈로 이사 수요가 높을 것으로 예상됩니다. 일산 내에서도 지역별로 주거 환경과 이사 조건이 상이하므로, 이사 계획 시 참고하시기 바랍니다.</p>
+        <div class="service-grid">
+            <div class="service-card" style="background-color: #f0f8ff;">
+                <h4>일산동구 지역 (백마마을, 정발산동, 마두동, 식사동)</h4>
+                <p>일산동구는 일산 신도시 초기에 조성된 백마마을(학원가)과 마두동을 중심으로, 비교적 오래된 아파트 단지가 많습니다. 식사동 위시티나 장항동 킨텍스 주변은 최근 몇 년간 신축 아파트와 오피스텔이 대규모로 들어선 지역입니다. <br>특히 <strong>식사동 자이</strong>나 <strong>킨텍스 원시티</strong> 같은 대규모 단지 이사는 관리소 규정이 까다롭고, 지정된 시간에만 이사가 가능하거나 엘리베이터 사용 예약이 필수인 경우가 많습니다. 저희는 이러한 일산동구의 특성을 정확히 이해하고 현장 경험이 풍부한 팀을 배정하여 신속하게 이사를 진행합니다.</p>
+            </div>
+            <div class="service-card" style="background-color: #f0f8ff;">
+                <h4>일산서구 지역 (주엽동, 대화동, 탄현동, 덕이동)</h4>
+                <p>일산서구는 후곡마을(학원가), 주엽동, 대화동을 중심으로 신도시 아파트 단지가 위치해 있습니다. 덕이동과 탄현동에는 최근 공급된 신축 아파트와 대규모 빌라 단지가 혼재되어 있어, 아파트 이사와 빌라 이사의 특성이 모두 나타납니다. <br>일산서구 지역은 1기 신도시 조성 당시 낮은 인구밀도로 설계되어 녹지 공간이 풍부한 장점이 있지만, 이면 도로 주차 공간 부족 문제가 종종 발생합니다. 사전에 주차 공간 확보 및 사다리차 설치 가능 여부를 확인하고 이사 계획을 세우는 것이 중요합니다. 저희는 주차 상황이 어려운 지역에서도 고객님의 짐을 안전하게 운반하기 위해 다양한 장비를 갖추고 있습니다.</p>
+            </div>
+        </div>
+
+        <h3>일산 포장이사 비용 절약 팁 (2026년 업데이트)</h3>
+        <ul>
+            <li><strong>손 없는 날 피하기:</strong> 2026년 달력을 기준으로 '손 없는 날'은 이사 수요가 폭증하는 날입니다. 이사 비용이 평소보다 20~30% 할증될 수 있으므로, 가능한 평일 이사나 '손 있는 날'을 선택하여 비용을 절약하세요.</li>
+            <li><strong>이사짐 양 줄이기:</strong> 이사 전에 불필요한 물건을 정리하여 짐의 양을 최소화하면 톤수를 줄여 비용을 절감할 수 있습니다. 일산 지역의 중고거래 커뮤니티나 나눔 장터를 활용하는 것도 좋은 방법입니다.</li>
+            <li><strong>복수 견적 비교:</strong> 최소 3곳 이상의 이사업체에 방문 견적을 요청하여 서비스를 비교해보고, 계약 시 견적서에 포함된 내용(추가 비용 발생 조건)을 꼼꼼히 확인하세요.</li>
+            <li><strong>공식 사이트 참고:</strong> 이사 준비 시, 정부에서 제공하는 이사 관련 팁이나 소비자 보호원 가이드라인을 참고하면 도움이 됩니다. (예: <a href="http://www.k-apt.go.kr/k-apt" target="_blank" rel="noopener noreferrer">국토교통부 공동주택관리정보시스템 K-apt</a>)</li>
+        </ul>
+    </section>
+
+    <!-- FAQ 섹션 -->
+    <section class="container" id="faq" class="faq">
+        <h2>자주 묻는 질문 (FAQ)</h2>
+        <div class="faq-list">
+            <div class="faq-item">
+                <p class="faq-question">Q1: 일산 포장이사 비용은 어떻게 결정되나요?</p>
+                <div class="faq-answer">A: 일산 포장이사 비용은 짐의 양(톤수), 이사 형태(원룸/투룸/아파트), 이사 거리, 작업 인원 수, 사다리차 사용 여부, 이사 날짜(성수기/손 없는 날) 등 여러 요인에 의해 결정됩니다. 특히 일산 지역은 아파트 단지별로 이사 규정이 다르므로 방문 견적을 통해 정확한 비용을 확인하는 것이 필수입니다.</div>
+            </div>
+            <div class="faq-item">
+                <p class="faq-question">Q2: 이사 견적은 언제 받는 것이 가장 좋은가요?</p>
+                <div class="faq-answer">A: 일반적으로 이사 날짜 3~4주 전에 견적을 받는 것이 좋습니다. 성수기(봄, 가을)나 손 없는 날은 1~2개월 전부터 예약이 마감될 수 있습니다. 2026년 이사 계획이 있다면 미리 연락하여 상담을 받으시길 권장합니다.</div>
+            </div>
+            <div class="faq-item">
+                <p class="faq-question">Q3: 일산 지역 이사 시 유의할 점이 있나요?</p>
+                <div class="faq-answer">A: 일산 신도시 아파트 단지는 동별로 관리사무소 이사 규정이 다를 수 있습니다. 엘리베이터 사용 예약, 이사 시간 제한 등을 사전에 확인해야 합니다. 일산서구의 덕이동이나 가좌동 일부 지역은 주차가 협소하여 사다리차 사용이 필수일 수 있으니 이 점을 감안해야 합니다.</div>
+            </div>
+            <div class="faq-item">
+                <p class="faq-question">Q4: 이사 중 짐 파손 시 보상은 어떻게 이루어지나요?</p>
+                <div class="faq-answer">A: 저희 업체는 이사 화물 배상 책임 보험에 가입되어 있어 이사 중 발생하는 짐 파손에 대해 책임 보상을 진행합니다. 이사 당일 짐 정리가 완료된 후 파손 여부를 꼼꼼히 확인하시고, 이상이 있다면 현장에서 즉시 담당자에게 알려주셔야 원활한 처리가 가능합니다.</div>
+            </div>
+            <div class="faq-item">
+                <p class="faq-question">Q5: 보관 이사 서비스는 어떻게 이용하나요?</p>
+                <div class="faq-answer">A: 보관 이사는 이사 날짜가 맞지 않거나 인테리어 공사 등으로 인해 짐 보관이 필요한 경우에 이용합니다. 짐을 전문적으로 포장한 후 안전한 보관 창고에 보관하고, 지정된 날짜에 새집으로 다시 운반 및 정리해드립니다. 장기간 보관 시에는 보관료가 발생합니다.</div>
+            </div>
+            <div class="faq-item">
+                <p class="faq-question">Q6: 일산 지역 이사 관련 정부 정책은 어디서 확인할 수 있나요?</p>
+                <div class="faq-answer">A: 고양시청 홈페이지(goyang.go.kr)에서 주택, 도시 계획, 인구 통계 등 일산 지역의 기본적인 정보를 확인할 수 있습니다. 또한, 일산 신도시 재건축 관련 정보는 국토교통부나 관련 지자체 공식 보도자료를 참고하는 것이 좋습니다.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 인용 및 신뢰성 확보를 위한 외부 링크 섹션 -->
+    <section class="container" id="external-references">
+        <h2>참고 자료 및 신뢰성 확보</h2>
+        <p>일산 이사 서비스의 전문성 및 신뢰성을 높이기 위해 관련 기관의 정보를 참고했습니다.</p>
+        <ul>
+            <li><a href="https://namu.wiki/w/%EC%9D%BC%EC%82%B0%EC%8B%A0%EB%8F%84%EC%8B%9C" target="_blank" rel="noopener noreferrer">일산 신도시의 역사와 특징 (Namuwiki)</a>: 일산 신도시 조성 배경, 지역별 특징 및 교통 인프라 분석.</li>
+            <li><a href="https://www.goyang.go.kr" target="_blank" rel="noopener noreferrer">고양시청 공식 홈페이지</a>: 고양시 인구 및 행정 정보, 지역 개발 계획 참고.</li>
+            <li><a href="https://www.k-apt.go.kr/k-apt" target="_blank" rel="noopener noreferrer">국토교통부 공동주택관리정보시스템 K-apt</a>: 아파트 이사 시 관리 규정, 장기수선계획 등 확인.</li>
+            <li><a href="https://www.consumer.go.kr/kca_cmmn/index.do" target="_blank" rel="noopener noreferrer">한국소비자원</a>: 이사 서비스 관련 소비자 보호 가이드라인 및 분쟁 해결 기준.</li>
+        </ul>
+    </section>
+
+    <!-- 연락처 및 상담 신청 섹션 (Dwell Time 강화) -->
+    <section class="container" id="contact">
+        <h2>일산 포장이사 무료 견적 및 상담 신청</h2>
+        <p><strong>일산 지역</strong>의 이사 전문가가 직접 방문하여 정확한 견적을 드립니다. 복잡한 이사 준비는 저희에게 맡기시고 고객님은 편안하게 새 출발을 준비하세요. 2026년 이사 계획을 지금 바로 상담하세요!</p>
+        <div class="quote-form-group">
+            <h3 style="margin-top: 0;">온라인 견적 신청 (체류 시간 증진 목적)</h3>
+            <form action="/submit-quote" method="post">
+                <p>
+                    <label for="name">이름</label>
+                    <input type="text" id="name" name="name" placeholder="이름을 입력해주세요" required>
+                </p>
+                <p>
+                    <label for="phone">연락처</label>
+                    <input type="tel" id="phone" name="phone" placeholder="010-XXXX-XXXX" pattern="[0-9]{3}-[0-9]{3,4}-[0-9]{4}" required>
+                </p>
+                <p>
+                    <label for="move_type">이사 형태 선택</label>
+                    <select id="move_type" name="move_type" required>
+                        <option value="">-- 이사 형태를 선택하세요 --</option>
+                        <option value="원룸">원룸 포장이사</option>
+                        <option value="투룸">투룸 포장이사</option>
+                        <option value="아파트">아파트/빌라 포장이사</option>
+                        <option value="사무실">사무실 이사</option>
+                        <option value="보관이사">보관 이사</option>
+                        <option value="기타">기타 이사</option>
+                    </select>
+                </p>
+                <p>
+                    <label for="address_from">출발지 주소 (일산 지역 상세 주소)</label>
+                    <input type="text" id="address_from" name="address_from" placeholder="예: 일산동구 마두동 123-45 강촌마을 1단지" required>
+                </p>
+                <p>
+                    <label for="address_to">도착지 주소 (지역 상관없음)</label>
+                    <input type="text" id="address_to" name="address_to" placeholder="예: 일산서구 주엽동 987-65" required>
+                </p>
+                <p>
+                    <label for="move_date">희망 이사 날짜</label>
+                    <input type="date" id="move_date" name="move_date" required>
+                </p>
+                <p>
+                    <label for="details">구체적인 이사 내용 (짐의 양, 특이사항, 희망 시간 등)</label>
+                    <textarea id="details" name="details" rows="4" placeholder="짐의 양이 많은 편인지, 특수 짐(피아노, 에어컨 등)이 있는지, 엘리베이터 유무 등을 상세히 알려주세요." required></textarea>
+                </p>
+                <p>
+                    <label for="terms_agree">개인정보 수집 및 이용 동의</label>
+                    <input type="checkbox" id="terms_agree" name="terms_agree" required> 동의합니다.
+                </p>
+                <button type="submit">이사 견적 요청하기</button>
+            </form>
+        </div>
+
+        <div class="cta-group">
+            <p style="font-size: 1.2em; color: #004d99; font-weight: bold;">전화 상담: <a href="tel:031-XXX-XXXX" style="color: #0078D7; text-decoration: none;">031-XXX-XXXX</a></p>
+            <p style="color: #666;">운영시간: 매일 08:00–20:00 (주말 및 공휴일 상담 가능)</p>
+        </div>
+
+        <!-- 지도 임베드 -->
+        <div style="margin-top: 30px;">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15810.0123456789!2d126.7593123!3d37.6681234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357c8d9c12345678%3A0x1234567890abcdef!2z6rSA7IKw7Iqk64yA!5e0!3m2!1sko!2skr!4v1620000000000!5m2!1sko!2skr" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 일산이사업체. All Rights Reserved.</p>
+            <p>대표: 홍길동 | 사업자등록번호: 123-45-67890 | 주소: 경기도 고양시 일산동구 XXX로 XX</p>
+            <p>개인정보처리방침 | 이용약관</p>
+        </div>
+    </footer>
+
+    <!-- 자바스크립트 (FAQ 아코디언 기능) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const questions = document.querySelectorAll('.faq-question');
+            questions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const answer = question.nextElementSibling;
+                    const isExpanded = question.getAttribute('aria-expanded') === 'true';
+                    question.setAttribute('aria-expanded', !isExpanded);
+                    answer.style.display = isExpanded ? 'none' : 'block';
+                });
+            });
+        });
+    </script>
+
+
+  
